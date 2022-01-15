@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\2022\January\14th.txt" />
+    <None Remove="Assets\2022\January\14.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets\2022\January\14th.txt" />
+    <EmbeddedResource Include="Assets\2022\January\14.txt" />
   </ItemGroup>
 
   <ItemGroup>

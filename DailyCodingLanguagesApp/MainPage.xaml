@@ -5,12 +5,12 @@
 
     <StackLayout>
         <Frame BackgroundColor="#B321F3" Padding="24" CornerRadius="0">
-            <Label Text="Coding Information" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            <Label x:Name ="Date" Text="Date appears here" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
-        <Label x:Name= "Language" Text="Lisp" FontSize="Title" Padding="30,10,30,10"/>
-        <Label x:Name="Info" Text="Lisp is the programming language of all days! In lisp you can add two numbers together like so:" FontSize="16" Padding="30,0,30,0" />
-        <Label x:Name="Question" FontSize="20" Padding="30,0,30,0" Text="+ 1 2 =" FontAttributes="Bold"/>
-        <Button Text="Click!" Clicked="Button_Clicked">
+        <Label x:Name= "Language" Text="No Language Valid" FontSize="Title" Padding="30,10,30,10"/>
+        <Label x:Name="Info" Text="No information found" FontSize="16" Padding="30,0,30,0" />
+        <Label x:Name="Question" Text="Question not found" FontSize="20" Padding="30,0,30,0"  FontAttributes="Bold"/>
+        <Button Text="My github!" Clicked="Button_Clicked">
         </Button>
     </StackLayout>
 

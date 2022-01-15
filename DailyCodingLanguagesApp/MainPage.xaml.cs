@@ -17,23 +17,19 @@ namespace DailyCodingLanguagesApp
             InitializeComponent();
             // Derive app instead of base application
             var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
-            Language.Text = tips.Language;
-            Info.Text = tips.Info;
-            Question.Text = tips.Question;
+            if (tips != null)
+            {
+                Language.Text = tips.Language;
+                Info.Text = tips.Info;
+                Question.Text = tips.Question;
+                Date.Text = tips.Date.ToShortDateString();
+            }
+            // Error message will be displayed if the loop is not executed
         }
-
-
 
         private void Button_Clicked(object sender, EventArgs e)
         {
             Launcher.OpenAsync("https://github.com/sikorosenai");
         }
-
-
-
-
-
     }
-
-
 }
