@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace DailyCodingLanguagesApp
 {
@@ -13,21 +15,25 @@ namespace DailyCodingLanguagesApp
         public MainPage()
         {
             InitializeComponent();
-
+            // Derive app instead of base application
+            var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
+            Language.Text = tips.Language;
+            Info.Text = tips.Info;
+            Question.Text = tips.Question;
         }
+
+
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            if (Language.Text != "Python")
-            {
-                Language.Text = "Python";
-            }
-            else
-            {
-                Language.Text = "Lisp";
-            }
+            Launcher.OpenAsync("https://github.com/sikorosenai");
         }
+
+
+
+
+
     }
 
-   
+
 }
