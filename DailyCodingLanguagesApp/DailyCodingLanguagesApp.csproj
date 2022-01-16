@@ -12,10 +12,14 @@
 
   <ItemGroup>
     <None Remove="Assets\2022\January\14.txt" />
+    <None Remove="Assets\2022\January\15.txt" />
+    <None Remove="Assets\2022\January\16.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\2022\January\14.txt" />
+    <EmbeddedResource Include="Assets\2022\January\15.txt" />
+    <EmbeddedResource Include="Assets\2022\January\16.txt" />
   </ItemGroup>
 
   <ItemGroup>

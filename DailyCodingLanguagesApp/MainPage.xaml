@@ -4,14 +4,18 @@
              x:Class="DailyCodingLanguagesApp.MainPage">
 
     <StackLayout>
-        <Frame BackgroundColor="#B321F3" Padding="24" CornerRadius="0">
-            <Label x:Name ="Date" Text="Date appears here" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        <Frame BackgroundColor="#B321F3" Padding="12" CornerRadius="0">
+            <Label x:Name ="Date" Text="Date appears here" HorizontalTextAlignment="Center" TextColor="White" FontSize="25"/>
         </Frame>
         <Label x:Name= "Language" Text="No Language Valid" FontSize="Title" Padding="30,10,30,10"/>
         <Label x:Name="Info" Text="No information found" FontSize="16" Padding="30,0,30,0" />
-        <Label x:Name="Question" Text="Question not found" FontSize="20" Padding="30,0,30,0"  FontAttributes="Bold"/>
-        <Button Text="My github!" Clicked="Button_Clicked">
-        </Button>
+        <Label x:Name="Question" Text="Question not found" FontSize="20" Padding="30,0,30,0" FontAttributes="Bold"/>
+        <Entry x:Name="UserInput" Placeholder="Enter text" Keyboard="Numeric" Completed="OnEntryCompleted" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="307"/>
+        <Label x:Name="Answer" Text="" FontSize="20"  Padding="30,0,30,0" />
+       
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Back" BorderColor="Black" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Clicked="BButton_Clicked"/>
+            <Button Text="Forward" BorderColor="Black" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Clicked="FButton_Clicked"/>
+        </StackLayout>
     </StackLayout>
-
 </ContentPage>

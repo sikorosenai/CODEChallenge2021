@@ -16,6 +16,11 @@ namespace DailyCodingLanguagesApp
         {
             InitializeComponent();
             // Derive app instead of base application
+            UpdateCurrentTip();
+        }
+       
+        void UpdateCurrentTip()
+        {
             var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
             if (tips != null)
             {
@@ -23,13 +28,44 @@ namespace DailyCodingLanguagesApp
                 Info.Text = tips.Info;
                 Question.Text = tips.Question;
                 Date.Text = tips.Date.ToShortDateString();
+
             }
             // Error message will be displayed if the loop is not executed
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
+        void OnEntryCompleted(object sender, EventArgs e)
         {
-            Launcher.OpenAsync("https://github.com/sikorosenai");
+            string input = ((Entry)sender).Text;
+          
+
+            var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
+            if (tips != null)
+            {
+                var answer = tips.Answer;
+                if (input == answer)
+                {
+                    Answer.Text = "Correct!";
+                    Answer.TextColor = Color.Green;
+                }
+                else
+                {
+                    Answer.Text = "Wrong :(";
+                    Answer.TextColor = Color.Red;
+                }
+            }
+            
         }
+        private void BButton_Clicked(object sender, EventArgs e)
+        {
+            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(1);
+            UpdateCurrentTip();
+        }
+
+        private void FButton_Clicked(object sender, EventArgs e)
+        {
+            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(-1);
+            UpdateCurrentTip();
+        }
+
+
     }
 }

@@ -118,6 +118,24 @@ namespace DailyCodingLanguagesApp
                 }
             }
         }
+
+        //stackoverflow.com/a/18297009
+        public void ChangeTip(int dir)
+        { // param "dir" can be 1 or -1 to move index forward or backward
+            List<DateTime> keys = new List<DateTime>(tips.Keys);
+            int newIndex = keys.IndexOf(currentDate) - dir;
+            if (newIndex < 0)
+            {
+                newIndex = 0;
+            }
+            else if (newIndex > tips.Count - 1)
+            {
+                newIndex = (tips.Count - 1);
+            }
+
+            currentDate = keys[newIndex];
+        }
+
         protected override void OnSleep()
         {
         }
