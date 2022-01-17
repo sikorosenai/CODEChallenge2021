@@ -43,7 +43,10 @@ namespace DailyCodingLanguagesApp
     {
         private Dictionary<DateTime, LanguageOfTheDay> tips = new Dictionary<DateTime, LanguageOfTheDay>();
         private DateTime currentDate = DateTime.Now;
-        
+        protected override void OnStart()
+        {
+        }
+
         // Called from MainPage.xaml.cs
         public LanguageOfTheDay GetCurrentTip()
         {
@@ -64,10 +67,6 @@ namespace DailyCodingLanguagesApp
             InitializeComponent();
             LoadTips();
             MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        { 
         }
 
         private DateTime GetDateFromAssetPath(string path)
@@ -134,6 +133,33 @@ namespace DailyCodingLanguagesApp
             }
 
             currentDate = keys[newIndex];
+        }
+
+        public struct TipChangeStatus
+        {
+            public bool forwardPos;
+            public bool backwardPos;
+        };
+
+        public TipChangeStatus TipChangePossible()
+        {
+            TipChangeStatus status;
+            status.forwardPos = false;
+            status.backwardPos = false;
+            
+            List<DateTime> keys = new List<DateTime>(tips.Keys);
+           
+            if (keys.IndexOf(currentDate) > 0)
+            {
+                status.backwardPos = true;
+            }
+            
+            if (keys.IndexOf(currentDate) < (tips.Count - 1))
+            {
+                status.forwardPos = true;       
+            }
+
+            return status;
         }
 
         protected override void OnSleep()
