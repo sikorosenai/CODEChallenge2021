@@ -67,6 +67,8 @@ namespace DailyCodingLanguagesApp
             InitializeComponent();
             LoadTips();
             MainPage = new MainPage();
+            //added for navigation
+            MainPage = new NavigationPage(new MainPage());
         }
 
         private DateTime GetDateFromAssetPath(string path)

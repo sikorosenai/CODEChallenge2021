@@ -12,14 +12,25 @@ using Plugin.LocalNotification;
 namespace DailyCodingLanguagesApp
 {
     public partial class MainPage : ContentPage
-    {
+    { 
         public MainPage()
         {
             InitializeComponent();
             // Derive app instead of base application
+
+            Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
             UpdateCurrentTip();
         }
-       
+
+        private void ConnectivityChangedHandler(object sender, ConnectivityChangedEventArgs e)
+        {
+            string networkStatus = e.NetworkAccess.ToString();
+            if (networkStatus == "None")
+            {
+                Navigation.PushAsync(new ConnectivityPage());
+            }        
+        }
+
         void UpdateCurrentTip()
         {
             var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
@@ -82,6 +93,7 @@ namespace DailyCodingLanguagesApp
                 Repeats = NotificationRepeat.Daily,
                 NotifyTime = DateTime.Now.AddSeconds(5)
             };
+
 
         }
 
