@@ -90,8 +90,8 @@ namespace DailyCodingLanguagesApp
                 Title = "Test",
                 Description = "Test Description",
                 ReturningData = "Dummy data", // Returning data when tapped on notification.
-                Repeats = NotificationRepeat.Daily,
-                NotifyTime = DateTime.Now.AddSeconds(5)
+                //Repeats = NotificationRepeat.Daily,
+                //NotifyTime = DateTime.Now.AddSeconds(5)
             };
 
 

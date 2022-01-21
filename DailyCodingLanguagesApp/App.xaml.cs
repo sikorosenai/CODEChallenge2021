@@ -5,6 +5,11 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace DailyCodingLanguagesApp
 {
@@ -164,6 +169,34 @@ namespace DailyCodingLanguagesApp
             return status;
         }
 
+        static async Task<int> FindFilePath()
+        {
+            //https://api.github.com/repos/sikorosenai/DailyLang/contents/2022?ref=main
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.Add(
+                new ProductInfoHeaderValue("MyApplication", "1"));
+            var repo = "sikorosenai/DailyLang";
+            var contentsUrl = $"https://api.github.com/repos/{repo}/contents";
+            var contentsJson = await httpClient.GetStringAsync(contentsUrl);
+            var contents = (JArray)JsonConvert.DeserializeObject(contentsJson);
+            foreach (var file in contents)
+            {
+                var fileType = (string)file["type"];
+                if (fileType == "dir")
+                {
+                    var directoryContentsUrl = (string)file["url"];
+                    // use this URL to list the contents of the folder
+                    Console.WriteLine($"DIR: {directoryContentsUrl}");
+                }
+                else if (fileType == "file")
+                {
+                    var downloadUrl = (string)file["download_url"];
+                    // use this URL to download the contents of the file
+                    Console.WriteLine($"DOWNLOAD: {downloadUrl}");
+                }
+            }
+            return 1;
+        }
         protected override void OnSleep()
         {
         }
