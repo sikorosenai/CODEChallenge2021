@@ -38,4 +38,10 @@
     <Folder Include="Assets\2022\March\" />
     <Folder Include="Assets\2022\April\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TipPage.xaml.cs">
+      <DependentUpon>TipPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

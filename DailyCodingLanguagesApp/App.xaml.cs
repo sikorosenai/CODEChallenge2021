@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace DailyCodingLanguagesApp
 {
@@ -46,14 +47,17 @@ namespace DailyCodingLanguagesApp
 
     public partial class App : Application
     {
-        private Dictionary<DateTime, LanguageOfTheDay> tips = new Dictionary<DateTime, LanguageOfTheDay>();
+        private SortedDictionary<DateTime, LanguageOfTheDay> tips = new SortedDictionary<DateTime, LanguageOfTheDay>();
         private DateTime currentDate = DateTime.Now;
-        protected override void OnStart()
+        private TipPage tipPage;
+        protected override async void OnStart()
         {
-            var result = FindTips();
+            tips = await FindTips();
+            currentDate = DateTime.Now.Date;
+            tipPage.UpdateCurrentTip();
         }
 
-        // Called from MainPage.xaml.cs
+        // Called from TipPage.xaml.cs
         public LanguageOfTheDay GetCurrentTip()
         {
             if (!tips.ContainsKey(currentDate))
@@ -72,13 +76,15 @@ namespace DailyCodingLanguagesApp
         {
             InitializeComponent();
             LoadTips();
-            MainPage = new MainPage();
-            //added for navigation
-            MainPage = new NavigationPage(new MainPage());
-        }
 
+            //added for navigation
+            tipPage = new TipPage();
+            MainPage = new NavigationPage(tipPage);
+        }
+        
         private DateTime GetDateFromAssetPath(string path)
         {
+           
             try
             {
                 var dateString = path.Split('.');
@@ -102,7 +108,7 @@ namespace DailyCodingLanguagesApp
         private void LoadTips()
         {
             // Read
-            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(TipPage)).Assembly;
 
             foreach (var assets in assembly.GetManifestResourceNames())
             {
@@ -130,7 +136,7 @@ namespace DailyCodingLanguagesApp
         public void ChangeTip(int dir)
         { // param "dir" can be 1 or -1 to move index forward or backward
             List<DateTime> keys = new List<DateTime>(tips.Keys);
-            int newIndex = keys.IndexOf(currentDate) - dir;
+            int newIndex = keys.IndexOf(currentDate) + dir;
             if (newIndex < 0)
             {
                 newIndex = 0;
@@ -139,7 +145,6 @@ namespace DailyCodingLanguagesApp
             {
                 newIndex = (tips.Count - 1);
             }
-
             currentDate = keys[newIndex];
         }
 
@@ -166,7 +171,6 @@ namespace DailyCodingLanguagesApp
             {
                 status.forwardPos = true;       
             }
-
             return status;
         }
 
@@ -207,9 +211,9 @@ namespace DailyCodingLanguagesApp
             }
             return paths;
         }
-        static async Task<List<string>> FindTips()
+        static async Task<SortedDictionary<DateTime, LanguageOfTheDay>> FindTips()
         {
-            var result = new List<string>();
+            var result = new SortedDictionary<DateTime, LanguageOfTheDay>();
             var repo = "sikorosenai/DailyLang";
             var contentsUrl = $"https://api.github.com/repos/{repo}/contents/";
 
@@ -225,7 +229,26 @@ namespace DailyCodingLanguagesApp
                     // For each day
                     foreach (var dayPath in days)
                     {
-                        result.Add(await ReadFileFromGithub(dayPath));
+                        // Example path: https://raw.githubusercontent.com/sikorosenai/DailyLang/main/2022/February/1.txt
+
+                        try
+                        {
+                            //https://regex101.com/r/qO5cX9/1
+                            var exp = new Regex(@"\d\d\d\d\/\w+\/\d+");
+                            var dateString = exp.Match(dayPath);
+
+                            var tipDate = DateTime.Parse(dateString.Value);
+                            var tipText = await ReadFileFromGithub(dayPath);
+
+                            var tip = LanguageOfTheDay.Parse(tipDate, tipText);
+
+                            //unwrap task string
+                            result.Add(tipDate, tip);
+                        }
+                        catch(Exception ex)
+                        {
+                            Debug.Assert(false, String.Format("Invalid Tip Parsing: {0}", ex.Message));
+                        }
                     }
                 }
             }

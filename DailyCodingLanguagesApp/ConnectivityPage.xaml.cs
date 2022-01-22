@@ -31,7 +31,7 @@ namespace DailyCodingLanguagesApp
             string networkStatus = e.NetworkAccess.ToString();
             if (networkStatus != "None")
             {
-                Navigation.PushAsync(new MainPage());
+                Navigation.PushAsync(new TipPage());
             }
         }
     }

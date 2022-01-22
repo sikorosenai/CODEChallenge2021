@@ -11,9 +11,9 @@ using Plugin.LocalNotification;
 
 namespace DailyCodingLanguagesApp
 {
-    public partial class MainPage : ContentPage
+    public partial class TipPage : ContentPage
     { 
-        public MainPage()
+        public TipPage()
         {
             InitializeComponent();
             // Derive app instead of base application
@@ -31,7 +31,7 @@ namespace DailyCodingLanguagesApp
             }        
         }
 
-        void UpdateCurrentTip()
+        public void UpdateCurrentTip()
         {
             var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
 
@@ -69,15 +69,21 @@ namespace DailyCodingLanguagesApp
                 }
             }        
         }
+
+        /// <summary>
+        /// When Back button is clicked, go to the previous tip
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BButton_Clicked(object sender, EventArgs e)
         {
-            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(1);
+            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(-1);
             UpdateCurrentTip();
         }
 
         private void FButton_Clicked(object sender, EventArgs e)
         {
-            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(-1);
+            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(1);
             UpdateCurrentTip();
         }
 
