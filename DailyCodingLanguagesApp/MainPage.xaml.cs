@@ -67,8 +67,7 @@ namespace DailyCodingLanguagesApp
                     Answer.Text = "Wrong :(";
                     Answer.TextColor = Color.Red;
                 }
-            }
-            
+            }        
         }
         private void BButton_Clicked(object sender, EventArgs e)
         {
@@ -91,11 +90,8 @@ namespace DailyCodingLanguagesApp
                 Description = "Test Description",
                 ReturningData = "Dummy data", // Returning data when tapped on notification.
                 //Repeats = NotificationRepeat.Daily,
-                //NotifyTime = DateTime.Now.AddSeconds(5)
+                //NotifyTime = DateTime.Now.AddSeconds(5)              
             };
-
-
         }
-
     }
 }

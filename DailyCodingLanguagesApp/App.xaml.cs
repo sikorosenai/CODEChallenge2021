@@ -50,6 +50,7 @@ namespace DailyCodingLanguagesApp
         private DateTime currentDate = DateTime.Now;
         protected override void OnStart()
         {
+            var result = FindTips();
         }
 
         // Called from MainPage.xaml.cs
@@ -169,34 +170,70 @@ namespace DailyCodingLanguagesApp
             return status;
         }
 
-        static async Task<int> FindFilePath()
+        enum FileSearchType
         {
+            Directory,
+            Files
+        };
+
+        static async Task<string> ReadFileFromGithub(string contentsUrl)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MyApplication", "1"));
+            return await httpClient.GetStringAsync(contentsUrl);
+        }
+
+        //https://markheath.net/post/list-and-download-github-repo-cs
+        static async Task<List<string>> FindFilePath(FileSearchType searchType, string contentsUrl)
+        {
+            var paths = new List<string>();
+
             //https://api.github.com/repos/sikorosenai/DailyLang/contents/2022?ref=main
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.Add(
-                new ProductInfoHeaderValue("MyApplication", "1"));
-            var repo = "sikorosenai/DailyLang";
-            var contentsUrl = $"https://api.github.com/repos/{repo}/contents";
+            httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MyApplication", "1"));
             var contentsJson = await httpClient.GetStringAsync(contentsUrl);
             var contents = (JArray)JsonConvert.DeserializeObject(contentsJson);
             foreach (var file in contents)
             {
                 var fileType = (string)file["type"];
-                if (fileType == "dir")
+                if (fileType == "dir" && searchType == FileSearchType.Directory)
                 {
-                    var directoryContentsUrl = (string)file["url"];
-                    // use this URL to list the contents of the folder
-                    Console.WriteLine($"DIR: {directoryContentsUrl}");
+                    paths.Add((string)file["url"]);
                 }
-                else if (fileType == "file")
+                else if (fileType == "file" && searchType == FileSearchType.Files)
                 {
-                    var downloadUrl = (string)file["download_url"];
-                    // use this URL to download the contents of the file
-                    Console.WriteLine($"DOWNLOAD: {downloadUrl}");
+                    paths.Add((string)file["download_url"]);
                 }
             }
-            return 1;
+            return paths;
         }
+        static async Task<List<string>> FindTips()
+        {
+            var result = new List<string>();
+            var repo = "sikorosenai/DailyLang";
+            var contentsUrl = $"https://api.github.com/repos/{repo}/contents/";
+
+            // Unwraps list for each year
+            var years = await FindFilePath(FileSearchType.Directory, contentsUrl);
+            foreach (var yearPath in years) 
+            {
+                var months = await FindFilePath(FileSearchType.Directory, yearPath);
+                // For each month
+                foreach (var monthPath in months)
+                {
+                    var days = await FindFilePath(FileSearchType.Files, monthPath);
+                    // For each day
+                    foreach (var dayPath in days)
+                    {
+                        result.Add(await ReadFileFromGithub(dayPath));
+                    }
+                }
+            }
+            // Returns list of strings of contents of text files to where FindTips was called 
+            return result;
+        }
+
+         
         protected override void OnSleep()
         {
         }
