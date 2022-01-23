@@ -12,14 +12,17 @@ using Plugin.LocalNotification;
 namespace DailyCodingLanguagesApp
 {
     public partial class TipPage : ContentPage
-    { 
-        public TipPage()
+    {
+        private TipManager tipManager = null;
+
+        public TipPage(TipManager theManager)
         {
+            // Passed theManager is equal to previous tipManager made, so that its functions can be used
+            tipManager = theManager;
             InitializeComponent();
             // Derive app instead of base application
 
             Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
-            UpdateCurrentTip();
         }
 
         private void ConnectivityChangedHandler(object sender, ConnectivityChangedEventArgs e)
@@ -27,13 +30,13 @@ namespace DailyCodingLanguagesApp
             string networkStatus = e.NetworkAccess.ToString();
             if (networkStatus == "None")
             {
-                Navigation.PushAsync(new ConnectivityPage());
+                //Navigation.PushAsync(new ConnectivityPage());
             }        
         }
 
         public void UpdateCurrentTip()
         {
-            var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
+            var tips = tipManager.GetCurrentTip();
 
             // Error message will be displayed if the following if statement is not executed
             if (tips != null)
@@ -46,14 +49,14 @@ namespace DailyCodingLanguagesApp
                 UserInput.Text = "";
             }
             
-            var status = (App.Current as DailyCodingLanguagesApp.App).TipChangePossible();  
+            var status = tipManager.TipChangePossible();  
             Back.IsEnabled = status.backwardPos;
             Forward.IsEnabled = status.forwardPos;
         }
         void OnEntryCompleted(object sender, EventArgs e)
         {
             string input = ((Entry)sender).Text;
-            var tips = (App.Current as DailyCodingLanguagesApp.App).GetCurrentTip();
+            var tips = tipManager.GetCurrentTip();
             if (tips != null)
             {
                 var answer = tips.Answer;
@@ -77,13 +80,13 @@ namespace DailyCodingLanguagesApp
         /// <param name="e"></param>
         private void BButton_Clicked(object sender, EventArgs e)
         {
-            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(-1);
+            tipManager.ChangeTip(-1);
             UpdateCurrentTip();
         }
 
         private void FButton_Clicked(object sender, EventArgs e)
         {
-            (App.Current as DailyCodingLanguagesApp.App).ChangeTip(1);
+            tipManager.ChangeTip(1);
             UpdateCurrentTip();
         }
 
