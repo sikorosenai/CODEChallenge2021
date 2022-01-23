@@ -4,6 +4,7 @@ using System.Text;
 
 namespace DailyCodingLanguagesApp
 {
+    [Serializable]
     public class LanguageOfTheDay
     {
         public static LanguageOfTheDay Parse(DateTime date, string text)

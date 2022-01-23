@@ -9,33 +9,45 @@ namespace DailyCodingLanguagesApp
     {
         private SortedDictionary<DateTime, LanguageOfTheDay> tips = new SortedDictionary<DateTime, LanguageOfTheDay>();
         private DateTime currentDate = DateTime.Now;
-        public TipPage tipPage = null;
+
+        // Send this event when the tips dictionary has changed
+        public event EventHandler TipsChanged;
 
         public async Task Start()
         {
-            // Load embedded tips, set the date to the latest, update the page.
-            tips = EmbeddedFileIO.LoadTips();
-            SetLatestTipDate();
-            tipPage.UpdateCurrentTip();
+            tips = FileBackupIO.LoadTips();
+            if (tips.Count != 0)
+            {
+                SetLatestTipDate();
+                TipsChanged?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                // Load embedded tips, set the date to the latest, update the page.
+                tips = EmbeddedFileIO.LoadTips();
+                SetLatestTipDate();
+                TipsChanged?.Invoke(this, EventArgs.Empty);
+            }
 
             // Load github tips, set the date to the latest, update the page.
             tips = await GitHubFileIO.LoadTips();
             SetLatestTipDate();
-            tipPage.UpdateCurrentTip();
-            
+            FileBackupIO.SaveTips(tips);
+            TipsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task UpdateTips()
         {
             tips = await GitHubFileIO.LoadTips();
             SetLatestTipDate();
-            tipPage.UpdateCurrentTip();
+            FileBackupIO.SaveTips(tips);
+            TipsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
         /// Either set currentData to be todays tip, or the latest tip
         /// </summary>
-        public void SetLatestTipDate()
+        private void SetLatestTipDate()
         {
             currentDate = DateTime.Now.Date;
             if (!tips.ContainsKey(currentDate))

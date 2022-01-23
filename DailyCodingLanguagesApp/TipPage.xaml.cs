@@ -36,15 +36,15 @@ namespace DailyCodingLanguagesApp
 
         public void UpdateCurrentTip()
         {
-            var tips = tipManager.GetCurrentTip();
+            var tip = tipManager.GetCurrentTip();
 
             // Error message will be displayed if the following if statement is not executed
-            if (tips != null)
+            if (tip != null)
             {
-                Language.Text = tips.Language;
-                Info.Text = tips.Info;
-                Question.Text = tips.Question;
-                Date.Text = tips.Date.ToShortDateString();
+                Language.Text = tip.Language;
+                Info.Text = tip.Info;
+                Question.Text = tip.Question;
+                Date.Text = tip.Date.ToShortDateString();
                 Answer.Text = "";
                 UserInput.Text = "";
             }
@@ -56,10 +56,10 @@ namespace DailyCodingLanguagesApp
         void OnEntryCompleted(object sender, EventArgs e)
         {
             string input = ((Entry)sender).Text;
-            var tips = tipManager.GetCurrentTip();
-            if (tips != null)
+            var tip = tipManager.GetCurrentTip();
+            if (tip != null)
             {
-                var answer = tips.Answer;
+                var answer = tip.Answer;
                 if (input == answer)
                 {
                     Answer.Text = "Correct!";

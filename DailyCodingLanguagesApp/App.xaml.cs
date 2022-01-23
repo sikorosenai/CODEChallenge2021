@@ -21,7 +21,12 @@ namespace DailyCodingLanguagesApp
         private TipManager tipManager = new TipManager();
         protected override async void OnStart()
         {
+            tipManager.TipsChanged += TipManagerSaysTipsHaveChanged;
             await tipManager.Start();
+        }
+
+        private void TipManagerSaysTipsHaveChanged(object sender, EventArgs e)
+        {
             tipPage.UpdateCurrentTip();
         }
 
@@ -31,7 +36,6 @@ namespace DailyCodingLanguagesApp
             
             //added for navigation
             tipPage = new TipPage(tipManager);
-            tipManager.tipPage = tipPage;
             MainPage = new NavigationPage(tipPage);
         }
         
