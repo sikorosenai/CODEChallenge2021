@@ -26,6 +26,11 @@ namespace DailyCodingLanguagesApp
             Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
         }
 
+        /// <summary>
+        /// Connection status has changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConnectivityChangedHandler(object sender, ConnectivityChangedEventArgs e)
         {
             string networkStatus = e.NetworkAccess.ToString();

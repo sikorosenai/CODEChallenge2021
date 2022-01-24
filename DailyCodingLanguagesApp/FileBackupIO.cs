@@ -9,6 +9,10 @@ namespace DailyCodingLanguagesApp
 {
     class FileBackupIO
     {
+        /// <summary>
+        /// Saves current data dictionary to disk
+        /// </summary>
+        /// <param name="tips"></param>
         public static void SaveTips(SortedDictionary<DateTime, LanguageOfTheDay> tips)
         {
             try
@@ -21,6 +25,11 @@ namespace DailyCodingLanguagesApp
 
             }
         }
+
+        /// <summary>
+        /// Loads stored data dictionary from disk
+        /// </summary>
+        /// <returns></returns>
         public static SortedDictionary<DateTime, LanguageOfTheDay> LoadTips()
         {
             try

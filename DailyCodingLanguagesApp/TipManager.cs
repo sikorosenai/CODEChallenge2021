@@ -13,35 +13,40 @@ namespace DailyCodingLanguagesApp
         // Send this event when the tips dictionary has changed
         public event EventHandler TipsChanged;
 
+        /// <summary>
+        /// Invokes TipsChangedEvent and calls SetLatestTipDate
+        /// </summary>
+        private void OnTipsChanged()
+        {
+            SetLatestTipDate();
+            TipsChanged?.Invoke(this, EventArgs.Empty);
+
+        }
         public async Task Start()
         {
             tips = FileBackupIO.LoadTips();
             if (tips.Count != 0)
             {
-                SetLatestTipDate();
-                TipsChanged?.Invoke(this, EventArgs.Empty);
+                OnTipsChanged();
             }
             else
             {
                 // Load embedded tips, set the date to the latest, update the page.
                 tips = EmbeddedFileIO.LoadTips();
-                SetLatestTipDate();
-                TipsChanged?.Invoke(this, EventArgs.Empty);
+                OnTipsChanged();
             }
 
             // Load github tips, set the date to the latest, update the page.
             tips = await GitHubFileIO.LoadTips();
-            SetLatestTipDate();
             FileBackupIO.SaveTips(tips);
-            TipsChanged?.Invoke(this, EventArgs.Empty);
+            OnTipsChanged();
         }
 
         public async Task UpdateTips()
         {
             tips = await GitHubFileIO.LoadTips();
-            SetLatestTipDate();
             FileBackupIO.SaveTips(tips);
-            TipsChanged?.Invoke(this, EventArgs.Empty);
+            OnTipsChanged();
         }
 
         /// <summary>
@@ -71,6 +76,11 @@ namespace DailyCodingLanguagesApp
             }
             return tips[currentDate];
         }
+
+        /// <summary>
+        /// Called when the user moves to a different tip
+        /// </summary>
+        /// <param name="dir">Direction</param>
         //stackoverflow.com/a/18297009
         public void ChangeTip(int dir)
         { // param "dir" can be 1 or -1 to move index forward or backward

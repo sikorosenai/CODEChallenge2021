@@ -37,6 +37,11 @@ namespace DailyCodingLanguagesApp
             return tips;
         }
 
+        /// <summary>
+        /// Returns the date of the tip from local asset path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static DateTime GetDateFromAssetPath(string path)
         {
             try

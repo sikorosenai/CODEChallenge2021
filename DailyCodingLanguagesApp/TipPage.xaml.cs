@@ -34,6 +34,9 @@ namespace DailyCodingLanguagesApp
             }        
         }
 
+        /// <summary>
+        /// Displays tip in Xamarin page
+        /// </summary>
         public void UpdateCurrentTip()
         {
             var tip = tipManager.GetCurrentTip();

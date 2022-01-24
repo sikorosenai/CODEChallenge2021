@@ -26,6 +26,12 @@ namespace DailyCodingLanguagesApp
             return await httpClient.GetStringAsync(contentsUrl);
         }
 
+        /// <summary>
+        /// Returns file paths for each text file stored on GitHub
+        /// </summary>
+        /// <param name="searchType"></param>
+        /// <param name="contentsUrl"></param>
+        /// <returns></returns>
         //https://markheath.net/post/list-and-download-github-repo-cs
         static async Task<List<string>> FindFilePath(FileSearchType searchType, string contentsUrl)
         {
@@ -50,6 +56,11 @@ namespace DailyCodingLanguagesApp
             }
             return paths;
         }
+
+        /// <summary>
+        /// Loads tips from GitHub
+        /// </summary>
+        /// <returns></returns>
         public static async Task<SortedDictionary<DateTime, LanguageOfTheDay>> LoadTips()
         {
             var result = new SortedDictionary<DateTime, LanguageOfTheDay>();
