@@ -12,11 +12,10 @@
         <Label x:Name="Question" Text="Question not found" FontSize="20" Padding="30,0,30,0" FontAttributes="Bold"/>
         <Entry x:Name="UserInput" Placeholder="Enter text" Keyboard="Numeric" Completed="OnEntryCompleted" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="307"/>
         <Label x:Name="Answer" Text="" FontSize="20"  Padding="30,0,30,0" />
-       
+
         <StackLayout Orientation="Horizontal">
             <Button x:Name="Back" Text="Back" BorderColor="Black" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Clicked="BButton_Clicked"/>
             <Button x:Name="Forward" Text="Forward" BorderColor="Black" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Clicked="FButton_Clicked"/>
         </StackLayout>
-        <Button Text="notification" x:Name="TestNotification" Clicked="Notification_Clicked"/>
     </StackLayout>
 </ContentPage>

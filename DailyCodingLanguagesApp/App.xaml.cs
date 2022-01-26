@@ -21,6 +21,7 @@ namespace DailyCodingLanguagesApp
         private TipManager tipManager = new TipManager();
         protected override async void OnStart()
         {
+            // Add onStart to functions that want to know when TipManagerSaysTipsHaveChanged
             tipManager.TipsChanged += TipManagerSaysTipsHaveChanged;
             await tipManager.Start();
         }

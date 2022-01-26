@@ -8,22 +8,23 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Plugin.LocalNotification;
+using Xamarin.CommunityToolkit.UI.Views;
 
 namespace DailyCodingLanguagesApp
 {
     //research why here
     //[XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ConnectivityPage : ContentPage
+    public partial class ConnectivityPage : Popup
     {
         public ConnectivityPage()
         {
             InitializeComponent();
-            Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
+            //Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
         }
 
-        private void RetryBtn_Clicked(object sender, EventArgs e)
+        private void CloseBtn_Clicked(object sender, EventArgs e)
         {
-            Connectivity.ConnectivityChanged += ConnectivityChangedHandler;
+            Dismiss(null);
         }
 
         /// <summary>

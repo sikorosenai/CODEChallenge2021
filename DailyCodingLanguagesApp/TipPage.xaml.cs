@@ -8,6 +8,7 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Plugin.LocalNotification;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace DailyCodingLanguagesApp
 {
@@ -30,7 +31,7 @@ namespace DailyCodingLanguagesApp
             string networkStatus = e.NetworkAccess.ToString();
             if (networkStatus == "None")
             {
-                //Navigation.PushAsync(new ConnectivityPage());
+                Navigation.ShowPopup(new ConnectivityPage());
             }        
         }
 
@@ -91,19 +92,6 @@ namespace DailyCodingLanguagesApp
         {
             tipManager.ChangeTip(1);
             UpdateCurrentTip();
-        }
-
-        private void Notification_Clicked(object sender, EventArgs e)
-        {
-            var notification = new NotificationRequest
-            {
-                NotificationId = 100,
-                Title = "Test",
-                Description = "Test Description",
-                ReturningData = "Dummy data", // Returning data when tapped on notification.
-                //Repeats = NotificationRepeat.Daily,
-                //NotifyTime = DateTime.Now.AddSeconds(5)              
-            };
         }
     }
 }
