@@ -1,4 +1,4 @@
-﻿Testdata
-Test data is the language of the day!
-Test invalid
-404
+﻿Regular Expressions
+Regular expressions are the technology of the day!  A regular expression (regex or regexp for short) is a special text string for describing a search pattern. An example of this would be: [a-z] which matches a single character in a range that matches any lowercase letter from "a" to "z". How many possible characters could be matched in this reg ex?
+[f-h]
+3

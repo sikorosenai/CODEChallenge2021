@@ -1,4 +1,0 @@
-﻿Lisp
-Lisp is today's coding language! In lisp you can add two numbers together like so: (+ 1 2), equalling three.
-(+ 3 (-5 3))
-5

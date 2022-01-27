@@ -1,0 +1,4 @@
+﻿﻿Python
+Python is today's coding language! Python is one of the most widely requested language for developers to learn, and is renowned for being the most beginner friendly language. To display a message in python you must use the 'print' function. What would be the result if the program was:
+print(2 + 3)?
+5

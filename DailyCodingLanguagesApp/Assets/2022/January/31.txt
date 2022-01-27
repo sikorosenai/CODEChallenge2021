@@ -1,0 +1,4 @@
+﻿Rust
+Rust is the Language of the day! Rust is a super fast language and very memory-efficient, having no runtime or garbage collector. Rust also has powerful pattern matching abilities, can you see what the result of this match will be?
+match 5 { 5 => 25, 6 => 30 }
+25
