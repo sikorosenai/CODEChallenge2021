@@ -1,0 +1,4 @@
+﻿JavaScript
+JavaScript is the language of the day! JavaScript (not to be confused with Java) is the world's most popular programming language, and is used in web development to program the behaviour of web pages. In JavaScript you can display something in an alert box by using the function alert(), if x = 5 and z = x*x, what do you think the result of this program is?
+alert(z);?
+25
