@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using Plugin.LocalNotification;
 using Xamarin.CommunityToolkit.Extensions;
+using System.Text.RegularExpressions;
 
 namespace DailyCodingLanguagesApp
 {
@@ -64,7 +65,8 @@ namespace DailyCodingLanguagesApp
             if (tip != null)
             {
                 var answer = tip.Answer;
-                if (input == answer)
+                var conAnswer = Regex.Replace(answer, "[\r]", string.Empty);
+                if (input == conAnswer)
                 {
                     Answer.Text = "Correct!";
                     Answer.TextColor = Color.Green;
