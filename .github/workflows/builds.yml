@@ -2,31 +2,29 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   # Build App
   build:
     runs-on: windows-latest
 
-    env:
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.0
+        uses: microsoft/setup-msbuild@v1.1
 
       - name: Build Solution
         run: msbuild ./DailyCodingLanguagesApp.sln /restore /p:Configuration=Release
 
       - name: Create and Sign the APK
-        run: msbuild DailyCodingLanguagesApp\DailyCodingLanguagesApp.Android\DailyCodingLanguagesApp.Android.csproj /t:SignAndroidPackage /p:Configuration=Release /p:OutputPath=bin\Release\
+        run: msbuild DailyCodingLanguagesApp.Android\DailyCodingLanguagesApp.Android.csproj /t:SignAndroidPackage /p:Configuration=Release /p:OutputPath=bin\Release\
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: DailyCodingLanguagesApp.apk
-          path: DailyCodingLanguagesApp\DailyCodingLanguagesApp.Android\bin\Release\com.silasmaughan.dailycodinglanguagesapp.apk
+          path: DailyCodingLanguagesApp.Android\bin\Release\com.silasmaughan.dailycodinglanguagesapp.apk
