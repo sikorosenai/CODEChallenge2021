@@ -11,6 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Assets\2022\April\**" />
+    <Compile Remove="Assets\2022\March\**" />
+    <EmbeddedResource Remove="Assets\2022\April\**" />
+    <EmbeddedResource Remove="Assets\2022\March\**" />
+    <None Remove="Assets\2022\April\**" />
+    <None Remove="Assets\2022\March\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\2022\January\15.txt" />
     <None Remove="Assets\2022\January\30.txt" />
     <None Remove="Assets\2022\January\31.txt" />
@@ -32,11 +41,6 @@
     <EmbeddedResource Update="ConnectivityPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\2022\March\" />
-    <Folder Include="Assets\2022\April\" />
   </ItemGroup>
 
   <ItemGroup>

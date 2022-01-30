@@ -37,22 +37,29 @@ namespace DailyCodingLanguagesApp
         {
             var paths = new List<string>();
 
-            //https://api.github.com/repos/sikorosenai/DailyLang/contents/2022?ref=main
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MyApplication", "1"));
-            var contentsJson = await httpClient.GetStringAsync(contentsUrl);
-            var contents = (JArray)JsonConvert.DeserializeObject(contentsJson);
-            foreach (var file in contents)
+            try
             {
-                var fileType = (string)file["type"];
-                if (fileType == "dir" && searchType == FileSearchType.Directory)
+                //https://api.github.com/repos/sikorosenai/DailyLang/contents/2022?ref=main
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MyApplication", "1"));
+                var contentsJson = await httpClient.GetStringAsync(contentsUrl);
+                var contents = (JArray)JsonConvert.DeserializeObject(contentsJson);
+                foreach (var file in contents)
                 {
-                    paths.Add((string)file["url"]);
+                    var fileType = (string)file["type"];
+                    if (fileType == "dir" && searchType == FileSearchType.Directory)
+                    {
+                        paths.Add((string)file["url"]);
+                    }
+                    else if (fileType == "file" && searchType == FileSearchType.Files)
+                    {
+                        paths.Add((string)file["download_url"]);
+                    }
                 }
-                else if (fileType == "file" && searchType == FileSearchType.Files)
-                {
-                    paths.Add((string)file["download_url"]);
-                }
+            }
+            catch(Exception)
+            {
+                
             }
             return paths;
         }

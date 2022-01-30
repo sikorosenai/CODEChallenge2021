@@ -37,7 +37,11 @@ namespace DailyCodingLanguagesApp
             }
 
             // Load github tips, set the date to the latest, update the page.
-            tips = await GitHubFileIO.LoadTips();
+            var githubTips = await GitHubFileIO.LoadTips();
+            if (githubTips.Count != 0)
+            {
+                tips = githubTips;
+            }
             FileBackupIO.SaveTips(tips);
             OnTipsChanged();
         }
