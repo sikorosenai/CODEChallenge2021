@@ -21,10 +21,10 @@ jobs:
         run: msbuild ./DailyCodingLanguagesApp.sln /restore /p:Configuration=Release
 
       - name: Create and Sign the APK
-        run: msbuild DailyCodingLanguagesApp\DailyCodingLanguagesApp.Android\DailyCodingLanguagesApp.Android.csproj /t:SignAndroidPackage /p:Configuration=Release /p:OutputPath=bin\Release\
+        run: msbuild DailyCodingLanguagesApp.Android\DailyCodingLanguagesApp.Android.csproj /t:SignAndroidPackage /p:Configuration=Release /p:OutputPath=bin\Release\
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: DailyCodingLanguagesApp.apk
-          path: DailyCodingLanguagesApp\DailyCodingLanguagesApp.Android\bin\Release\DailyCodingLanguagesApp.apk
+          path: DailyCodingLanguagesApp.Android\bin\Release\DailyCodingLanguagesApp.apk
